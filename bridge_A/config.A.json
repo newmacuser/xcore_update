@@ -1,0 +1,62 @@
+{  
+  "reverse":{ 
+    // 这是 A 的反向代理设置，必须有下面的 bridges 对象
+    "bridges":[  
+      {  
+        "tag":"bridge", // 关于 A 的反向代理标签，在路由中会用到
+        "domain":"www.ytm1234.com" // A 和 B 反向代理通信的域名，可以自己取一个，可以不是自己购买的域名，但必须跟下面 B 中的 reverse 配置的域名一致
+      }
+    ]
+  },
+  "outbounds": [
+    {  
+      //A连接B的outbound  
+      "tag":"tunnel", // A 连接 B 的 outbound 的标签，在路由中会用到
+      "protocol":"vmess",
+      "settings":{  
+        "vnext":[  
+          {  
+            "address":"000.000.000.000", // B 地址，IP 或 实际的域名
+            "port":16823,
+            "users":[  
+              {  
+                "id":"60a02eae-1ebf-4ac8-a762-362c8969b130",
+                "alterId":64
+              }
+            ]
+          }
+        ]
+      }
+    },
+    // 另一个 outbound，最终连接私有网盘    
+    {  
+      "protocol":"freedom",
+      "settings":{  
+      },
+      "tag":"out"
+    }    
+  ],
+  "routing":{   
+    "rules":[  
+      {  
+        // 配置 A 主动连接 B 的路由规则
+        "type":"field",
+        "inboundTag":[  
+          "bridge"
+        ],
+        "domain":[  
+          "full:www.ytm1234.com"
+        ],
+        "outboundTag":"tunnel"
+      },
+      {  
+        // 反向连接访问私有网盘的规则
+        "type":"field",
+        "inboundTag":[  
+          "bridge"
+        ],
+        "outboundTag":"out"
+      }
+    ]
+  }
+}
