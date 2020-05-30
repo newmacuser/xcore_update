@@ -1,0 +1,93 @@
+{
+  "log": {
+        "access": "/var/log/v2ray/access.log",
+        "error": "/var/log/v2ray/error.log",
+        "loglevel": "warning"
+    },
+  "inbounds": [
+    {
+    "port":19510,
+      "listen": "127.0.0.1", 
+      "tag": "vmess-in", 
+      "protocol": "vmess", 
+      "settings": {
+        "clients": [
+          {
+	  "id":"ebfddee1-302c-4884-9b12-50900df9705d",
+	  "alterId":16
+          }
+        ]
+      }, 
+      "streamSettings": {
+        "network": "ws", 
+        "wsSettings": {
+	  "path":"/41739004/"
+        }
+      }
+    }
+  ],
+
+"inboundDetour": [{
+    "port": 12469,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "dcc9f9bf-5f5f-4004-ae9f-f9e118e41731",
+          "level": 1,
+          "alterId": 64
+        }
+      ]
+    },
+	"streamSettings": {
+	"network": "mkcp",
+	"kcpSettings": {
+          "mtu": 1350,
+          "tti": 10,
+          "uplinkCapacity": 100,
+          "downlinkCapacity": 100,
+          "congestion": true,
+          "header": {
+            "type": "wechat-video"
+	  }
+        }
+      }
+  }
+],
+
+ 
+  "outbounds": [
+    {
+      "protocol": "freedom", 
+      "settings": { }, 
+      "tag": "direct"
+    }, 
+    {
+      "protocol": "blackhole", 
+      "settings": { }, 
+      "tag": "blocked"
+    }
+  ], 
+  "routing": {
+    "domainStrategy": "AsIs", 
+    "rules": [
+      {
+        "type": "field", 
+        "inboundTag": [
+          "vmess-in"
+        ], 
+        "outboundTag": "direct"
+      }
+    ]},
+
+"transport": {
+		"kcpSettings": {
+            "uplinkCapacity": 100,
+            "downlinkCapacity": 100,
+            "congestion": true
+        },
+		"sockopt": {
+			"tcpFastOpen": true
+		}
+  }
+}
