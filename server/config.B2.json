@@ -1,0 +1,71 @@
+{  
+  "reverse":{  //这是 B 的反向代理设置，必须有下面的 portals 对象
+    "portals":[  
+      {  
+        "tag":"portal",
+        "domain":"www.ytm1234.com"        // 必须和上面 A 设定的域名一样
+      }
+    ]
+  },
+  "inbounds":[
+    {  
+      // 接受 C 的inbound
+      "tag":"tunnel", // 标签，路由中用到
+      "port":19510,
+      "listen": "127.0.0.1", 
+      "tag": "vmess-in", 
+      "protocol": "vmess", 
+      "settings": {
+        "clients": [
+          {
+	  "id":"ebfddee1-302c-4884-9b12-50900df9705d",
+	  "alterId":16
+          }
+        ]
+      }, 
+      "streamSettings": {
+        "network": "ws", 
+        "wsSettings": {
+	  "path":"/41739004/"
+        }
+      }
+    },
+    // 另一个 inbound，接受 A 主动发起的请求  
+    {  
+      "tag": "interconn",// 标签，路由中用到
+      "port":16823,
+      "protocol":"vmess",
+      "settings":{  
+        "clients":[  
+          {  
+            "id":"60a02eae-1ebf-4ac8-a762-362c8969b130",
+            "alterId":64
+          }
+        ]
+      }
+    }
+  ],
+  "routing":{   
+    "rules":[  
+      {  //路由规则，接收 C 的请求后发给 A
+        "type":"field",
+        "inboundTag":[  
+          "tuneel"
+        ],
+        "outboundTag":"portal"
+      },
+      {  //路由规则，让 B 能够识别这是 A 主动发起的反向代理连接
+        "type":"field",
+        "inboundTag":[  
+          "interconn"
+        ],
+        "domain":[  
+          "full:www.ytm1234.com"
+        ],
+        "outboundTag":"portal"
+      }
+    ]
+  }
+}
+
+
