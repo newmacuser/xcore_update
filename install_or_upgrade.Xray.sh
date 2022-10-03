@@ -3,7 +3,7 @@ if ! command -v xray &> /dev/null; then
   echo -e "Xray is not installed. Do you want to install now? [y/n]"
   while true; do
     	read ny
-    	case $ny in
+	case $ny in
        	 [Yy]* ) echo "Installing Xray ..."
 			   bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install; break;;
       	  [Nn]* ) echo "You don't want to change anything; exit"; exit 0;;
