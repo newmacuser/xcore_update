@@ -1,4 +1,4 @@
-# Install or upgrade Xray core to the lastest version, or update geosite and geoip files.
+# A wrapper for installing or upgrading Xray core to the lastest version, or just updating geosite and geoip files.
 
 Platform: linux
 
