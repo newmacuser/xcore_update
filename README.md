@@ -3,4 +3,5 @@
 Platform: linux
 
 Usage:
+
   sudo bash install_or_renew.Xray.sh
