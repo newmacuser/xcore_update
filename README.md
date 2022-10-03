@@ -4,5 +4,5 @@ Platform: linux
 
 Usage:
 
-    wget -q https://raw.githubusercontent.com/newmacuser/V2RAY_configs/master/install_or_upgrade.Xray.sh
+    wget -q https://raw.githubusercontent.com/newmacuser/xray_update/master/install_or_upgrade.Xray.sh
     sudo bash install_or_upgrade.Xray.sh
