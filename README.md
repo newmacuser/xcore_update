@@ -4,4 +4,5 @@ Platform: linux
 
 Usage:
 
+    wget -q https://raw.githubusercontent.com/newmacuser/V2RAY_configs/master/install_or_renew.Xray.sh
     sudo bash install_or_renew.Xray.sh
