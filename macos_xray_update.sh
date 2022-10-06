@@ -23,7 +23,6 @@ tag=`grep "tag_name" latest | cut -d'"' -f4`
 	fi
 	unzip -p Xray*.zip xray > xray
 	chmod +x xray
-	mv core core-$tag
 	mv xray ./core
 	echo -e "Update geosite and geoip files as well."
 	if ! test -d geobackup; then
@@ -96,15 +95,13 @@ fi
 }
 #============================================
 if ! test -f core; then
-  funcin
-else
-echo -e "This is your current directory: $PWD"
-echo -e "Please make sure your core file is located in this directory. [y/n]"
+echo -e "Your 'core' file is NOT here! This is your current directory: $PWD"
+echo -e "Do you want to download core file to the current directory? [y/n]"
 while true; do
     	read ny
     	case $ny in
-       	 [Yy]* ) echo "Updating Xray ..."
-		funcdo; break;;
+       	 [Yy]* ) echo "Download Xray core file..."
+		funcin; break;;
       	 [Nn]* ) echo "Please enter a correct directory for your core file (use absolute path):"
 		read cored
 		cd $cored
@@ -124,6 +121,6 @@ while true; do
       	  * ) echo "Please answer yes or no.";;
 esac
 done
+else
+	funcdo
 fi
-
-
