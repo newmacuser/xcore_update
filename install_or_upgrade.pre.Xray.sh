@@ -5,7 +5,8 @@ if ! command -v xray &> /dev/null; then
     	read ny
     	case $ny in
        	 [Yy]* ) echo "Installing Xray ..."
-			   bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install; break;;
+			xver=`curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep "tag_name" | cut -d'"' -f4 | head -n 1`
+			bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version ${xver: 1:5}; break;;
       	  [Nn]* ) echo "You don't want to change anything; exit"; exit 0;;
       	  * ) echo "Please answer yes or no.";;
     	esac
